@@ -1,0 +1,79 @@
+﻿@using WebBanHangOnline.Common
+@using (Ajax.BeginForm("AddSetting", "SettingSystem", new AjaxOptions
+{
+    OnBegin = "OnBegin",
+    OnSuccess = "OnSuccess",
+    OnFailure = "OnFailure"
+}))
+{
+    <script>
+        function OnBegin(rs) {
+            $('#load_page').html('Đang lưu...');
+        }
+        function OnSuccess(rs) {
+            $('#load_page').html('');
+        }
+        function OnFailure(rs) {
+
+        }
+    </script>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header p-2">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thông tin chung</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#SettingSeo" data-toggle="tab">SEO</a></li>
+                    </ul>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="activity">
+                            <div class="form-group">
+                                <label>Tiêu đề trang</label>
+                                <input type="text" value="@SettingHelper.GetValue("SettingTitle")" name="SettingTitle" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Logo</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="text" value="@SettingHelper.GetValue("SettingLogo")" id="SettingLogo" name="SettingLogo" class="form-control" />
+                                    </div>
+                                    <div class="input-group-append">
+                                        <input type="button" id="browserClick" value="Tải ảnh" onclick="BrowseServer('SettingLogo');" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Hotline</label>
+                                <input type="text" value="@SettingHelper.GetValue("SettingHotline")" name="SettingHotline" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" value="@SettingHelper.GetValue("SettingEmail")" name="SettingEmail" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="SettingSeo">
+                            <div class="form-group">
+                                <label>Tiêu đề Seo</label>
+                                <input type="text" value="@SettingHelper.GetValue("SettingTitleSeo")" name="SettingTitleSeo" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Mô tả Seo</label>
+                                <textarea name="SettingDesSeo" class="form-control">@SettingHelper.GetValue("SettingDesSeo")</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Từ khóa Seo</label>
+                                <textarea name="SettingKeySeo" class="form-control">@SettingHelper.GetValue("SettingKeySeo")</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
